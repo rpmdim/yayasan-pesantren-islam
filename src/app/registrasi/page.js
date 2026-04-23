@@ -22,10 +22,10 @@ export default function Registrasi() {
               </p>
             </div>
 
-            {/* Role Selector */}
+            
             <div className="h-[65px] bg-[#FFF8E0] rounded-[10px] flex items-center">
               
-              {/* Member */}
+              
               <div className="w-1/2 flex justify-center">
                 <button
                   onClick={() => setActive("Member")}
@@ -39,7 +39,7 @@ export default function Registrasi() {
                 </button>
               </div>
 
-              {/* Staff */}
+              
               <div className="w-1/2 flex justify-center">
                 <button
                   onClick={() => setActive("Staff")}
@@ -54,16 +54,16 @@ export default function Registrasi() {
               </div>
             </div>
 
-            {/* Email */}
+            
             <Input label="Email" type="email" placeholder="Masukkan email" />
 
-            {/* Password */}
+            
             <div className="flex gap-6">
               <Input label="Password" type="password" />
               <Input label="Konfirmasi Password" type="password" />
             </div>
 
-            {/* Section */}
+            
             <div className="mt-6">
               <p className="font-semibold text-[22px]">Data Pribadi</p>
             </div>
@@ -94,7 +94,7 @@ export default function Registrasi() {
             </>
             )}
 
-            {/* Submit */}
+            
             <div className="flex justify-center mt-8">
               <button className="w-[661px] h-[45px] bg-[#FFD22E] rounded-[10px] text-[21px] font-semibold hover:bg-[#e6c12a] transition">
                 Daftar
