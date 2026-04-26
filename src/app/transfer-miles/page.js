@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import NavbarRole from "@/app/component/navbarRole";
 
 export default function Klaim_missing_miles() {
   const [data, setData] = useState([
@@ -52,13 +53,16 @@ export default function Klaim_missing_miles() {
     };
 
   return (
-    <div className="w-full p-6 pt-30 space-y-6 flex justify-center flex-col items-center">
+    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] transition-colors">
+      <NavbarRole role="member" userName="John W. Doe" roleLabel="Member" />
+
+      <main className="w-full p-6 pt-32 space-y-6 flex justify-center flex-col items-center">
       
       {/* HEADER */}
-      <div className="w-[1200px] flex justify-between items-center">
+      <div className="w-[1200px] max-w-full flex justify-between items-center">
         <div>
-          <p className="font-bold text-[25px] mt-3 mb-3">Transfer Miles</p>
-          <p className="text-[15px]">
+          <p className="font-bold text-[25px] mt-3 mb-3 text-black dark:text-gray-100">Transfer Miles</p>
+          <p className="text-[15px] text-gray-700 dark:text-gray-300">
             Award Miles tersedia:{" "}
             <span className="font-bold">32,000</span>
           </p>
@@ -75,14 +79,14 @@ export default function Klaim_missing_miles() {
       </div>
 
       
-      <div className="w-[1200px] p-6 border border-gray-300 rounded-xl bg-white shadow-sm">
-        <p className="font-semibold text-[22px] mb-4">Riwayat Transfer</p>
+      <div className="w-[1200px] max-w-full p-6 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-[#111827] shadow-sm">
+        <p className="font-semibold text-[22px] mb-4 text-black dark:text-gray-100">Riwayat Transfer</p>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <table className="w-full text-sm text-black dark:text-gray-100">
             
             
-            <thead className="bg-[#FFF8E0] text-gray-700 text-xs uppercase">
+            <thead className="bg-[#FFF8E0] dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs uppercase">
               <tr>
                 <th className="px-6 py-3 text-left">Waktu</th>
                 <th className="px-6 py-3 text-left">Member</th>
@@ -94,9 +98,9 @@ export default function Klaim_missing_miles() {
             </thead>
 
             
-            <tbody className="divide-y">
+            <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
               {data.map((item) => (
-                <tr key={item.id} className="hover:bg-gray-50">
+                <tr key={item.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/70">
 
                   
                   <td className="px-6 py-4">{item.waktu}</td>
@@ -104,7 +108,7 @@ export default function Klaim_missing_miles() {
                  
                   <td className="px-6 py-4">
                     <p className="font-semibold">{item.nama}</p>
-                    <p className="text-xs text-gray-500">{item.email}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">{item.email}</p>
                   </td>
 
          
@@ -126,7 +130,7 @@ export default function Klaim_missing_miles() {
                     <span
                       className={`px-3 py-1 rounded-full text-xs font-medium ${
                         item.tipe === "Kirim"
-                          ? "bg-gray-200 text-gray-700"
+                          ? "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-100"
                           : "bg-[#FFD22E] text-black"
                       }`}
                     >
@@ -135,7 +139,7 @@ export default function Klaim_missing_miles() {
                   </td>
 
               
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-4 text-gray-600 dark:text-gray-300">
                     <svg
                       width="18"
                       height="18"
@@ -154,7 +158,7 @@ export default function Klaim_missing_miles() {
         </div>
       </div>
       {isOpen && (
-  <div className="fixed inset-0 z-[99999] flex items-center justify-center">
+  <div className="fixed inset-0 z-[99999] flex items-center justify-center px-4">
     
    
     <div
@@ -163,7 +167,7 @@ export default function Klaim_missing_miles() {
     />
 
 
-    <div className="relative bg-white w-[450px] rounded-2xl shadow-xl p-6 z-10 animate-fadeIn">
+    <div className="relative bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-700 text-black dark:text-gray-100 w-[450px] max-w-full rounded-2xl shadow-xl p-6 z-10 animate-fadeIn">
 
 
       <h2 className="text-[22px] font-bold mb-4">
@@ -174,35 +178,35 @@ export default function Klaim_missing_miles() {
 
       
         <div>
-          <label className="text-sm font-medium">Email Penerima</label>
+          <label className="text-sm font-medium text-black dark:text-gray-200">Email Penerima</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="contoh@email.com"
-            className="w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFD22E]"
+            className="w-full mt-1 p-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-black dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFD22E]"
           />
         </div>
 
         <div>
-          <label className="text-sm font-medium">Jumlah Miles</label>
+          <label className="text-sm font-medium text-black dark:text-gray-200">Jumlah Miles</label>
           <input
             type="number"
             value={miles}
             onChange={(e) => setMiles(e.target.value)}
             placeholder="Masukkan jumlah"
-            className="w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFD22E]"
+            className="w-full mt-1 p-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-black dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFD22E]"
           />
         </div>
 
        
         <div>
-          <label className="text-sm font-medium">Catatan (opsional)</label>
+          <label className="text-sm font-medium text-black dark:text-gray-200">Catatan (opsional)</label>
           <textarea
             value={catatan}
             onChange={(e) => setCatatan(e.target.value)}
             placeholder="Tambahkan catatan..."
-            className="w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFD22E]"
+            className="w-full mt-1 p-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-black dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFD22E]"
           />
         </div>
 
@@ -218,6 +222,7 @@ export default function Klaim_missing_miles() {
     </div>
   </div>
 )}
+      </main>
     </div>
   );
 }

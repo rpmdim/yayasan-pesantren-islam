@@ -158,17 +158,17 @@ export default function IdentitasMember() {
     };
 
     return (
-        <div className="min-h-screen bg-white text-black">
+        <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] transition-colors">
             {/* Navbar member karena fitur ini hanya dapat diakses oleh Member */}
             <NavbarRole role="member" userName="John Doe" roleLabel="Member" />
 
             {/* Konten utama */}
-            <div className="pt-32 px-10 pb-10 bg-white text-black">
+            <div className="pt-32 px-4 sm:px-8 lg:px-10 pb-10">
                 {/* Header halaman */}
                 <div className="flex justify-between items-center mb-6">
                     <div>
-                        <p className="font-bold text-[25px] text-black">Identitas Saya</p>
-                        <p className="text-[15px] text-gray-600">
+                        <p className="font-bold text-[25px] text-black dark:text-gray-100">Identitas Saya</p>
+                        <p className="text-[15px] text-gray-600 dark:text-gray-300">
                             Kelola dokumen identitas yang terdaftar pada akun Anda.
                         </p>
                     </div>
@@ -182,10 +182,10 @@ export default function IdentitasMember() {
                 </div>
 
                 {/* Tabel daftar identitas */}
-                <div className="bg-white rounded-[10px] shadow-md border border-gray-200 overflow-hidden max-w-[950px] mx-auto">
+                <div className="bg-white dark:bg-[#111827] rounded-[10px] shadow-md border border-gray-200 dark:border-gray-700 overflow-hidden max-w-[950px] mx-auto">
                     <div className="overflow-x-auto">
-                        <table className="w-full text-sm text-gray-800">
-                            <thead className="bg-[#FFF8E0] text-gray-700 text-xs uppercase">
+                        <table className="w-full text-sm text-gray-800 dark:text-gray-100">
+                            <thead className="bg-[#FFF8E0] dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs uppercase">
                                 <tr>
                                     <th className="px-6 py-4 text-left">No. Dokumen</th>
                                     <th className="px-6 py-4 text-left">Jenis</th>
@@ -197,29 +197,29 @@ export default function IdentitasMember() {
                                 </tr>
                             </thead>
 
-                            <tbody className="divide-y divide-gray-200">
+                            <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                                 {identitas.map((item) => {
                                     const status = getStatus(item.tanggalHabis);
 
                                     return (
-                                        <tr key={item.id} className="hover:bg-gray-50">
-                                            <td className="px-6 py-4 font-semibold text-gray-800">
+                                        <tr key={item.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/70">
+                                            <td className="px-6 py-4 font-semibold text-gray-800 dark:text-gray-100">
                                                 {item.nomorDokumen}
                                             </td>
 
-                                            <td className="px-6 py-4 text-gray-800">
+                                            <td className="px-6 py-4 text-gray-800 dark:text-gray-100">
                                                 {item.jenisDokumen}
                                             </td>
 
-                                            <td className="px-6 py-4 text-gray-800">
+                                            <td className="px-6 py-4 text-gray-800 dark:text-gray-100">
                                                 {item.negaraPenerbit}
                                             </td>
 
-                                            <td className="px-6 py-4 text-gray-800">
+                                            <td className="px-6 py-4 text-gray-800 dark:text-gray-100">
                                                 {item.tanggalTerbit}
                                             </td>
 
-                                            <td className="px-6 py-4 text-gray-800">
+                                            <td className="px-6 py-4 text-gray-800 dark:text-gray-100">
                                                 {item.tanggalHabis}
                                             </td>
 
@@ -238,7 +238,7 @@ export default function IdentitasMember() {
                                                 <div className="flex gap-3">
                                                     <button
                                                         onClick={() => openEditModal(item)}
-                                                        className="text-gray-700 hover:text-blue-600"
+                                                        className="text-gray-700 dark:text-gray-300 hover:text-blue-600"
                                                         title="Edit"
                                                     >
                                                         ✎
@@ -261,7 +261,7 @@ export default function IdentitasMember() {
                                     <tr>
                                         <td
                                             colSpan="7"
-                                            className="px-6 py-8 text-center text-gray-500"
+                                            className="px-6 py-8 text-center text-gray-500 dark:text-gray-400"
                                         >
                                             Belum ada identitas yang terdaftar.
                                         </td>
@@ -317,15 +317,15 @@ function IdentitasModal({ title, form, onChange, onClose, onSave, mode }) {
             <div className="absolute inset-0 bg-black/60" onClick={onClose} />
 
             {/* Box modal */}
-            <div className="relative bg-white text-black w-[430px] rounded-[8px] shadow-xl p-6 z-10">
+            <div className="relative bg-white dark:bg-[#111827] text-black dark:text-gray-100 border border-gray-200 dark:border-gray-700 w-[430px] rounded-[8px] shadow-xl p-6 z-10">
                 <button
                     onClick={onClose}
-                    className="absolute top-3 right-4 text-gray-500 hover:text-black text-[18px]"
+                    className="absolute top-3 right-4 text-gray-500 dark:text-gray-300 hover:text-black dark:hover:text-gray-100 text-[18px]"
                 >
                     ×
                 </button>
 
-                <p className="font-semibold text-[15px] mb-4 text-black">{title}</p>
+                <p className="font-semibold text-[15px] mb-4 text-black dark:text-gray-100">{title}</p>
 
                 <div className="flex flex-col gap-3">
                     {/* Nomor dokumen hanya bisa diisi saat tambah.
@@ -387,12 +387,12 @@ function DeleteModal({ item, onClose, onConfirm }) {
         <div className="fixed inset-0 z-[99999] flex items-center justify-center">
             <div className="absolute inset-0 bg-black/60" onClick={onClose} />
 
-            <div className="relative bg-white text-black w-[430px] rounded-[8px] shadow-xl p-6 z-10">
-                <p className="font-semibold text-[16px] mb-2 text-black">
+            <div className="relative bg-white dark:bg-[#111827] text-black dark:text-gray-100 border border-gray-200 dark:border-gray-700 w-[430px] rounded-[8px] shadow-xl p-6 z-10">
+                <p className="font-semibold text-[16px] mb-2 text-black dark:text-gray-100">
                     Hapus Identitas?
                 </p>
 
-                <p className="text-[12px] text-gray-600 mb-5">
+                <p className="text-[12px] text-gray-600 dark:text-gray-300 mb-5">
                     Identitas dengan nomor dokumen{" "}
                     <span className="font-semibold">{item.nomorDokumen}</span> akan
                     dihapus. Tindakan ini tidak dapat dibatalkan.
@@ -401,7 +401,7 @@ function DeleteModal({ item, onClose, onConfirm }) {
                 <div className="flex justify-end gap-3">
                     <button
                         onClick={onClose}
-                        className="px-4 py-2 rounded-[6px] bg-gray-100 text-gray-700 text-[12px] font-semibold hover:bg-gray-200"
+                        className="px-4 py-2 rounded-[6px] bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-100 text-[12px] font-semibold hover:bg-gray-200 dark:hover:bg-gray-700"
                     >
                         Batal
                     </button>
@@ -422,16 +422,16 @@ function DeleteModal({ item, onClose, onConfirm }) {
 function Input({ label, type = "text", value, onChange, disabled = false }) {
     return (
         <div className="flex flex-col gap-1">
-            <label className="font-semibold text-[10px] text-black">{label}</label>
+            <label className="font-semibold text-[10px] text-black dark:text-gray-200">{label}</label>
 
             <input
                 type={type}
                 value={value}
                 disabled={disabled}
                 onChange={(e) => onChange(e.target.value)}
-                className={`h-[30px] border border-[#B7B6B6] rounded-[5px] px-2 text-[11px] focus:outline-none focus:ring-2 focus:ring-yellow-400 ${disabled
-                        ? "bg-gray-100 text-gray-500 cursor-not-allowed"
-                        : "bg-white text-black"
+                className={`h-[30px] border border-gray-300 dark:border-gray-700 rounded-[5px] px-2 text-[11px] focus:outline-none focus:ring-2 focus:ring-yellow-400 ${disabled
+                    ? "bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 cursor-not-allowed"
+                    : "bg-white dark:bg-gray-900 text-black dark:text-gray-100"
                     }`}
             />
         </div>
@@ -442,12 +442,12 @@ function Input({ label, type = "text", value, onChange, disabled = false }) {
 function SelectInput({ label, value, onChange, options }) {
     return (
         <div className="flex flex-col gap-1">
-            <label className="font-semibold text-[10px] text-black">{label}</label>
+            <label className="font-semibold text-[10px] text-black dark:text-gray-200">{label}</label>
 
             <select
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
-                className="h-[30px] bg-white text-black border border-[#B7B6B6] rounded-[5px] px-2 text-[11px] focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                className="h-[30px] bg-white dark:bg-gray-900 text-black dark:text-gray-100 border border-gray-300 dark:border-gray-700 rounded-[5px] px-2 text-[11px] focus:outline-none focus:ring-2 focus:ring-yellow-400 [color-scheme:light] dark:[color-scheme:dark]"
             >
                 {options.map((option) => (
                     <option key={option} value={option}>

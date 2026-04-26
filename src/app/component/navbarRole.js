@@ -13,7 +13,7 @@ export default function NavbarRole({
 
     const memberMenu = [
         { label: "Dashboard", href: "/dashboard" },
-        { label: "Identitas Saya", href: "/identitas-saya" },
+        { label: "Identitas Saya", href: "/identitas-member" },
         { label: "Klaim Miles", href: "/klaim-miles" },
         { label: "Transfer Miles", href: "/transfer-miles" },
         { label: "Redeem Hadiah", href: "/redeem-hadiah" },
