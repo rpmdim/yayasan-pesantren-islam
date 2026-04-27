@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import NavbarRole from "@/app/component/navbarRole";
 
 const CheckSVG = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 256 256" style={{ cursor: "pointer" }}>
@@ -130,10 +131,27 @@ export default function KlaimMissingMiles() {
     setModalTolak(null);
   };
 
+  const user = {
+    salutation: "Mr",
+    firstName: "Budi",
+    lastName: "Santoso",
+    nationality: "Indonesia",
+    countryCode: "+62",
+    phoneNumber: "81234567890",
+    birthDate: "1998-05-12",
+    memberNo: "M0001",
+    tier: "Gold",
+    totalMiles: "45,000",
+    awardMiles: "32,000",
+    joinDate: "2024-01-15",
+  };
+
+  const fullName = `${user.salutation} ${user.firstName} ${user.middleName} ${user.lastName}`;
+
   return (
     <div className="w-full p-6 pt-30 space-y-6">
 
-      
+      <NavbarRole role="member" userName={fullName} roleLabel="Member" />
       <div className="flex flex-wrap gap-3">
         <div className="flex items-center gap-2 border rounded-full px-4 py-2 bg-white shadow-sm">
           <span className="text-gray-500 text-sm">Status |</span>

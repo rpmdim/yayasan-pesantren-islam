@@ -1,7 +1,9 @@
 "use client";
 
-import Navbar from "@/app/component/navbar";
+import Navbar from "@/app/component/navbarGuest";
+import { addUser, getUsers } from "@/data/users";
 import { useState } from "react";
+
 
 export default function Registrasi() {
   const [active, setActive] = useState("Member");
@@ -96,7 +98,7 @@ export default function Registrasi() {
 
             
             <div className="flex justify-center mt-8">
-              <button className="w-[661px] h-[45px] bg-[#FFD22E] rounded-[10px] text-[21px] font-semibold hover:bg-[#e6c12a] transition">
+              <button className="w-[661px] h-[45px] bg-[#FFD22E] rounded-[10px] text-[21px] font-semibold hover:bg-[#e6c12a] transition" onClick={handleSubmit}>
                 Daftar
               </button>
             </div>
@@ -108,6 +110,38 @@ export default function Registrasi() {
   );
 }
 
+const handleSubmit = () => {
+  if (form.password !== form.confirmPassword) {
+    alert("Password tidak sama");
+    return;
+  }
+
+  const existing = getUsers().find((u) => u.email === form.email);
+  if (existing) {
+    alert("Email sudah terdaftar");
+    return;
+  }
+
+  const newUser = {
+    id: Date.now(),
+    role: active,
+    email: form.email,
+    password: form.password,
+    salutation: form.salutation,
+    firstName: form.firstName,
+    lastName: form.lastName,
+    nationality: form.nationality,
+    countryCode: form.countryCode,
+    phoneNumber: form.phoneNumber,
+    birthDate: form.birthDate,
+    airlineCode: active === "Staff" ? form.airlineCode : null,
+  };
+
+  addUser(newUser);
+
+  console.log("Users sekarang:", getUsers());
+  alert("Registrasi berhasil (in-memory)");
+};
 
 function Input({ label, type = "text", placeholder = "" }) {
   return (
