@@ -207,18 +207,22 @@ export default function DataMember() {
         setMembers((prev) =>
             prev.filter((member) => member.id !== deleteMember.id)
         );
+
         setDeleteMember(null);
     };
 
     return (
-        <div className="min-h-screen bg-white text-black">
+        <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] transition-colors">
             <NavbarRole role="staff" userName="Admin Staff" roleLabel="Staff" />
 
-            <div className="pt-32 px-10 pb-10 bg-white text-black">
-                <div className="flex justify-between items-center mb-6">
+            <div className="pt-32 px-4 sm:px-8 lg:px-16 pb-12">
+                {/* HEADER */}
+                <div className="mb-8 flex items-start justify-between gap-4">
                     <div>
-                        <p className="font-bold text-[25px] text-black">Kelola Member</p>
-                        <p className="text-[15px] text-gray-600">
+                        <p className="text-[32px] font-bold text-black dark:text-gray-100">
+                            Kelola Member
+                        </p>
+                        <p className="text-[16px] text-gray-600 dark:text-gray-300">
                             Kelola data member yang terdaftar di sistem AeroMiles.
                         </p>
                     </div>
@@ -231,31 +235,44 @@ export default function DataMember() {
                     </button>
                 </div>
 
-                <div className="flex justify-between items-center mb-5">
-                    <input
-                        type="text"
-                        placeholder="Cari nama, email, atau nomor member..."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        className="w-[420px] h-[42px] bg-white text-black border border-[#B7B6B6] rounded-[10px] px-4 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                    />
+                {/* FILTER CARD */}
+                <div className="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-700 rounded-[18px] shadow-sm p-6 mb-6">
+                    <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                        <input
+                            type="text"
+                            placeholder="Cari nama, email, atau nomor member..."
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            className="w-full md:w-[480px] h-[42px] bg-white dark:bg-gray-900 text-black dark:text-gray-100 border border-gray-300 dark:border-gray-700 rounded-[10px] px-4 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FFD22E]"
+                        />
 
-                    <select
-                        value={tierFilter}
-                        onChange={(e) => setTierFilter(e.target.value)}
-                        className="w-[170px] h-[42px] bg-white text-black border border-[#B7B6B6] rounded-[10px] px-3 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                    >
-                        <option value="">Semua Tier</option>
-                        <option value="Bronze">Bronze</option>
-                        <option value="Silver">Silver</option>
-                        <option value="Gold">Gold</option>
-                    </select>
+                        <select
+                            value={tierFilter}
+                            onChange={(e) => setTierFilter(e.target.value)}
+                            className="w-full md:w-[180px] h-[42px] bg-white dark:bg-gray-900 text-black dark:text-gray-100 border border-gray-300 dark:border-gray-700 rounded-[10px] px-3 focus:outline-none focus:ring-2 focus:ring-[#FFD22E]"
+                        >
+                            <option value="">Semua Tier</option>
+                            <option value="Bronze">Bronze</option>
+                            <option value="Silver">Silver</option>
+                            <option value="Gold">Gold</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div className="bg-white rounded-2xl shadow-md border border-gray-200 overflow-hidden">
+                {/* TABLE CARD */}
+                <div className="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-700 rounded-[18px] shadow-sm overflow-hidden">
+                    <div className="px-8 py-6 border-b border-gray-200 dark:border-gray-700">
+                        <p className="text-[22px] font-semibold text-black dark:text-gray-100">
+                            Daftar Member
+                        </p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                            Total {filteredMembers.length} member ditampilkan
+                        </p>
+                    </div>
+
                     <div className="overflow-x-auto">
-                        <table className="w-full text-sm text-gray-800">
-                            <thead className="bg-[#FFF8E0] text-gray-700 text-xs uppercase">
+                        <table className="w-full text-sm">
+                            <thead className="bg-[#FFF8E0] dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs uppercase">
                                 <tr>
                                     <th className="px-6 py-4 text-left">No. Member</th>
                                     <th className="px-6 py-4 text-left">Nama</th>
@@ -268,44 +285,38 @@ export default function DataMember() {
                                 </tr>
                             </thead>
 
-                            <tbody className="divide-y divide-gray-200">
+                            <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                                 {filteredMembers.map((member) => (
-                                    <tr key={member.id} className="hover:bg-gray-50">
-                                        <td className="px-6 py-4 font-semibold text-gray-800">
+                                    <tr
+                                        key={member.id}
+                                        className="hover:bg-gray-50 dark:hover:bg-gray-800"
+                                    >
+                                        <td className="px-6 py-4 font-semibold text-black dark:text-gray-100">
                                             {member.nomorMember}
                                         </td>
 
-                                        <td className="px-6 py-4 text-gray-800">
+                                        <td className="px-6 py-4 text-black dark:text-gray-100">
                                             {member.salutation} {member.namaDepan}{" "}
                                             {member.namaTengah} {member.namaBelakang}
                                         </td>
 
-                                        <td className="px-6 py-4 text-gray-800">
+                                        <td className="px-6 py-4 text-gray-600 dark:text-gray-300">
                                             {member.email}
                                         </td>
 
                                         <td className="px-6 py-4">
-                                            <span
-                                                className={`px-3 py-1 rounded-full text-xs font-medium ${member.tier === "Gold"
-                                                        ? "bg-yellow-100 text-yellow-700"
-                                                        : member.tier === "Silver"
-                                                            ? "bg-gray-200 text-gray-700"
-                                                            : "bg-orange-100 text-orange-700"
-                                                    }`}
-                                            >
-                                                {member.tier}
-                                            </span>
+                                            <TierBadge tier={member.tier} />
                                         </td>
 
-                                        <td className="px-6 py-4 text-gray-800">
+                                        <td className="px-6 py-4 font-medium text-black dark:text-gray-100">
                                             {formatMiles(member.totalMiles)}
                                         </td>
 
-                                        <td className="px-6 py-4 text-gray-800">
+                                        <td className="px-6 py-4 font-medium text-black dark:text-gray-100">
                                             {formatMiles(member.awardMiles)}
                                         </td>
 
-                                        <td className="px-6 py-4 text-gray-800">
+                                        <td className="px-6 py-4 text-gray-600 dark:text-gray-300">
                                             {member.bergabung}
                                         </td>
 
@@ -313,7 +324,7 @@ export default function DataMember() {
                                             <div className="flex gap-3">
                                                 <button
                                                     onClick={() => openEditModal(member)}
-                                                    className="text-gray-700 hover:text-blue-600"
+                                                    className="text-gray-700 dark:text-gray-300 hover:text-blue-600"
                                                     title="Edit"
                                                 >
                                                     ✎
@@ -321,7 +332,7 @@ export default function DataMember() {
 
                                                 <button
                                                     onClick={() => setDeleteMember(member)}
-                                                    className="text-red-600 hover:text-red-800"
+                                                    className="text-red-500 hover:text-red-700"
                                                     title="Hapus"
                                                 >
                                                     🗑
@@ -335,7 +346,7 @@ export default function DataMember() {
                                     <tr>
                                         <td
                                             colSpan="8"
-                                            className="px-6 py-8 text-center text-gray-500"
+                                            className="px-6 py-8 text-center text-gray-500 dark:text-gray-400"
                                         >
                                             Tidak ada member yang sesuai dengan pencarian.
                                         </td>
@@ -380,20 +391,38 @@ export default function DataMember() {
     );
 }
 
+function TierBadge({ tier }) {
+    const style =
+        tier === "Gold"
+            ? "bg-[#FFF1B8] dark:bg-[#FFD22E]/20 text-[#8A6A00] dark:text-[#FFD22E]"
+            : tier === "Silver"
+                ? "bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
+                : "bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300";
+
+    return (
+        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${style}`}>
+            {tier}
+        </span>
+    );
+}
+
 function MemberModal({ title, form, onChange, onClose, onSave, mode }) {
     return (
         <div className="fixed inset-0 z-[99999] flex items-center justify-center">
             <div className="absolute inset-0 bg-black/60" onClick={onClose} />
 
-            <div className="relative bg-white text-black w-[430px] rounded-[8px] shadow-xl p-6 z-10">
+            <div className="relative bg-white dark:bg-[#111827] text-black dark:text-gray-100 w-[430px] rounded-[14px] shadow-2xl p-6 z-10 border border-gray-200 dark:border-gray-700">
                 <button
                     onClick={onClose}
-                    className="absolute top-3 right-4 text-gray-500 hover:text-black text-[18px]"
+                    className="absolute top-3 right-4 text-gray-500 hover:text-black dark:hover:text-white text-[18px]"
                 >
                     ×
                 </button>
 
-                <p className="font-semibold text-[15px] mb-4 text-black">{title}</p>
+                <p className="font-semibold text-[18px] mb-1">{title}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mb-5">
+                    Lengkapi data member sesuai kebutuhan.
+                </p>
 
                 <div className="grid grid-cols-2 gap-x-4 gap-y-3">
                     {mode === "add" && (
@@ -479,7 +508,7 @@ function MemberModal({ title, form, onChange, onClose, onSave, mode }) {
                 <div className="flex justify-end mt-5">
                     <button
                         onClick={onSave}
-                        className="w-[85px] h-[34px] bg-[#003566] text-white rounded-[6px] text-[12px] font-semibold hover:bg-[#00294f] transition"
+                        className="w-[90px] h-[36px] bg-[#003566] text-white rounded-[8px] text-[12px] font-semibold hover:bg-[#00294f] transition"
                     >
                         Simpan
                     </button>
@@ -494,14 +523,12 @@ function DeleteModal({ member, onClose, onConfirm }) {
         <div className="fixed inset-0 z-[99999] flex items-center justify-center">
             <div className="absolute inset-0 bg-black/60" onClick={onClose} />
 
-            <div className="relative bg-white text-black w-[430px] rounded-[8px] shadow-xl p-6 z-10">
-                <p className="font-semibold text-[16px] mb-2 text-black">
-                    Hapus Member?
-                </p>
+            <div className="relative bg-white dark:bg-[#111827] text-black dark:text-gray-100 w-[430px] rounded-[14px] shadow-2xl p-6 z-10 border border-gray-200 dark:border-gray-700">
+                <p className="font-semibold text-[18px] mb-2">Hapus Member?</p>
 
-                <p className="text-[12px] text-gray-600 mb-5">
+                <p className="text-[13px] text-gray-600 dark:text-gray-400 mb-5">
                     Semua data terkait{" "}
-                    <span className="font-semibold">
+                    <span className="font-semibold text-black dark:text-gray-100">
                         {member.namaDepan} {member.namaBelakang}
                     </span>{" "}
                     akan ikut terhapus. Tindakan ini tidak dapat dibatalkan.
@@ -510,14 +537,14 @@ function DeleteModal({ member, onClose, onConfirm }) {
                 <div className="flex justify-end gap-3">
                     <button
                         onClick={onClose}
-                        className="px-4 py-2 rounded-[6px] bg-gray-100 text-gray-700 text-[12px] font-semibold hover:bg-gray-200"
+                        className="px-4 py-2 rounded-[8px] bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-[12px] font-semibold hover:bg-gray-200 dark:hover:bg-gray-700"
                     >
                         Batal
                     </button>
 
                     <button
                         onClick={onConfirm}
-                        className="px-4 py-2 rounded-[6px] bg-[#003566] text-white text-[12px] font-semibold hover:bg-[#00294f]"
+                        className="px-4 py-2 rounded-[8px] bg-[#003566] text-white text-[12px] font-semibold hover:bg-[#00294f]"
                     >
                         Hapus
                     </button>
@@ -530,13 +557,15 @@ function DeleteModal({ member, onClose, onConfirm }) {
 function Input({ label, type = "text", value, onChange }) {
     return (
         <div className="flex flex-col gap-1">
-            <label className="font-semibold text-[10px] text-black">{label}</label>
+            <label className="font-semibold text-[11px] text-black dark:text-gray-100">
+                {label}
+            </label>
 
             <input
                 type={type}
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
-                className="h-[30px] bg-white text-black border border-[#B7B6B6] rounded-[5px] px-2 text-[11px] focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                className="h-[32px] bg-white dark:bg-gray-900 text-black dark:text-gray-100 border border-gray-300 dark:border-gray-700 rounded-[7px] px-2 text-[12px] focus:outline-none focus:ring-2 focus:ring-[#FFD22E]"
             />
         </div>
     );
@@ -545,12 +574,14 @@ function Input({ label, type = "text", value, onChange }) {
 function SelectInput({ label, value, onChange, options }) {
     return (
         <div className="flex flex-col gap-1">
-            <label className="font-semibold text-[10px] text-black">{label}</label>
+            <label className="font-semibold text-[11px] text-black dark:text-gray-100">
+                {label}
+            </label>
 
             <select
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
-                className="h-[30px] bg-white text-black border border-[#B7B6B6] rounded-[5px] px-2 text-[11px] focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                className="h-[32px] bg-white dark:bg-gray-900 text-black dark:text-gray-100 border border-gray-300 dark:border-gray-700 rounded-[7px] px-2 text-[12px] focus:outline-none focus:ring-2 focus:ring-[#FFD22E]"
             >
                 {options.map((option) => (
                     <option key={option} value={option}>

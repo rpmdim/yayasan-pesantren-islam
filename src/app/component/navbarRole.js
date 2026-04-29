@@ -33,7 +33,7 @@ export default function NavbarRole() {
 
   const staffMenu = [
     { label: "Dashboard", href: "/staff-dashboard" },
-    { label: "Kelola Member", href: "/kelola-member" },
+    { label: "Data Member", href: "/data-member" },
     { label: "Kelola Klaim", href: "/klaim-missing-miles" },
     { label: "Kelola Hadiah & Penyedia", href: "/kelola-hadiah-penyedia" },
     { label: "Kelola Mitra", href: "/kelola-mitra" },
