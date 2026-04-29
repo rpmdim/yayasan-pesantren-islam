@@ -4,8 +4,6 @@ import { useState } from "react";
 import NavbarRole from "@/app/component/navbarRole";
 
 export default function IdentitasMember() {
-    // Data dummy awal untuk daftar identitas member.
-    // Nanti kalau sudah connect backend/database, bagian ini bisa diganti fetch API.
     const [identitas, setIdentitas] = useState([
         {
             id: 1,
@@ -33,7 +31,6 @@ export default function IdentitasMember() {
         },
     ]);
 
-    // Template form kosong untuk tambah/edit identitas.
     const emptyForm = {
         nomorDokumen: "",
         jenisDokumen: "Paspor",
@@ -42,22 +39,18 @@ export default function IdentitasMember() {
         tanggalHabis: "",
     };
 
-    // State untuk modal tambah, modal edit, modal hapus, dan form.
     const [isAddOpen, setIsAddOpen] = useState(false);
     const [editIdentitas, setEditIdentitas] = useState(null);
     const [deleteIdentitas, setDeleteIdentitas] = useState(null);
     const [form, setForm] = useState(emptyForm);
 
-    // Tanggal patokan dummy untuk menentukan status aktif/kedaluwarsa.
-    // Dipakai supaya hasil render stabil dan tidak memicu hydration error.
-    const today = "2025-01-01";
+    // Tanggal dibuat statis supaya hasil render server dan client stabil.
+    const today = new Date().toISOString().split("T")[0];
 
-    // Menentukan status identitas berdasarkan tanggal habis.
     const getStatus = (tanggalHabis) => {
         return tanggalHabis < today ? "Kedaluwarsa" : "Aktif";
     };
 
-    // Mengubah value form berdasarkan nama field.
     const handleChange = (field, value) => {
         setForm((prev) => ({
             ...prev,
@@ -65,15 +58,12 @@ export default function IdentitasMember() {
         }));
     };
 
-    // Membuka modal tambah identitas.
     const openAddModal = () => {
         setForm(emptyForm);
         setIsAddOpen(true);
     };
 
-    // Menambahkan identitas baru.
     const handleAddIdentitas = () => {
-        // Validasi sederhana supaya field penting tidak kosong.
         if (
             !form.nomorDokumen ||
             !form.jenisDokumen ||
@@ -85,7 +75,6 @@ export default function IdentitasMember() {
             return;
         }
 
-        // Validasi nomor dokumen harus unik.
         const isDuplicate = identitas.some(
             (item) => item.nomorDokumen === form.nomorDokumen
         );
@@ -105,7 +94,6 @@ export default function IdentitasMember() {
         setForm(emptyForm);
     };
 
-    // Membuka modal edit dan mengisi form dengan data identitas yang dipilih.
     const openEditModal = (item) => {
         setEditIdentitas(item);
         setForm({
@@ -117,8 +105,6 @@ export default function IdentitasMember() {
         });
     };
 
-    // Menyimpan perubahan identitas.
-    // Nomor dokumen tidak diubah sesuai ketentuan soal.
     const handleEditIdentitas = () => {
         if (
             !form.jenisDokumen ||
@@ -148,7 +134,6 @@ export default function IdentitasMember() {
         setForm(emptyForm);
     };
 
-    // Menghapus identitas yang dipilih.
     const handleDeleteIdentitas = () => {
         setIdentitas((prev) =>
             prev.filter((item) => item.id !== deleteIdentitas.id)
@@ -159,16 +144,16 @@ export default function IdentitasMember() {
 
     return (
         <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] transition-colors">
-            {/* Navbar member karena fitur ini hanya dapat diakses oleh Member */}
             <NavbarRole role="member" userName="John Doe" roleLabel="Member" />
 
-            {/* Konten utama */}
-            <div className="pt-32 px-4 sm:px-8 lg:px-10 pb-10">
-                {/* Header halaman */}
-                <div className="flex justify-between items-center mb-6">
+            <div className="pt-32 px-4 sm:px-8 lg:px-16 pb-12">
+                {/* HEADER */}
+                <div className="mb-8 flex items-start justify-between gap-4">
                     <div>
-                        <p className="font-bold text-[25px] text-black dark:text-gray-100">Identitas Saya</p>
-                        <p className="text-[15px] text-gray-600 dark:text-gray-300">
+                        <p className="text-[32px] font-bold text-black dark:text-gray-100">
+                            Identitas Saya
+                        </p>
+                        <p className="text-[16px] text-gray-600 dark:text-gray-300">
                             Kelola dokumen identitas yang terdaftar pada akun Anda.
                         </p>
                     </div>
@@ -181,10 +166,19 @@ export default function IdentitasMember() {
                     </button>
                 </div>
 
-                {/* Tabel daftar identitas */}
-                <div className="bg-white dark:bg-[#111827] rounded-[10px] shadow-md border border-gray-200 dark:border-gray-700 overflow-hidden max-w-[950px] mx-auto">
+                {/* TABLE CARD */}
+                <div className="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-700 rounded-[18px] shadow-sm overflow-hidden">
+                    <div className="px-8 py-6 border-b border-gray-200 dark:border-gray-700">
+                        <p className="text-[22px] font-semibold text-black dark:text-gray-100">
+                            Daftar Identitas
+                        </p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                            Total {identitas.length} dokumen identitas terdaftar
+                        </p>
+                    </div>
+
                     <div className="overflow-x-auto">
-                        <table className="w-full text-sm text-gray-800 dark:text-gray-100">
+                        <table className="w-full text-sm">
                             <thead className="bg-[#FFF8E0] dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs uppercase">
                                 <tr>
                                     <th className="px-6 py-4 text-left">No. Dokumen</th>
@@ -202,36 +196,32 @@ export default function IdentitasMember() {
                                     const status = getStatus(item.tanggalHabis);
 
                                     return (
-                                        <tr key={item.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/70">
-                                            <td className="px-6 py-4 font-semibold text-gray-800 dark:text-gray-100">
+                                        <tr
+                                            key={item.id}
+                                            className="hover:bg-gray-50 dark:hover:bg-gray-800"
+                                        >
+                                            <td className="px-6 py-4 font-semibold text-black dark:text-gray-100">
                                                 {item.nomorDokumen}
                                             </td>
 
-                                            <td className="px-6 py-4 text-gray-800 dark:text-gray-100">
+                                            <td className="px-6 py-4 text-black dark:text-gray-100">
                                                 {item.jenisDokumen}
                                             </td>
 
-                                            <td className="px-6 py-4 text-gray-800 dark:text-gray-100">
+                                            <td className="px-6 py-4 text-gray-600 dark:text-gray-300">
                                                 {item.negaraPenerbit}
                                             </td>
 
-                                            <td className="px-6 py-4 text-gray-800 dark:text-gray-100">
+                                            <td className="px-6 py-4 text-gray-600 dark:text-gray-300">
                                                 {item.tanggalTerbit}
                                             </td>
 
-                                            <td className="px-6 py-4 text-gray-800 dark:text-gray-100">
+                                            <td className="px-6 py-4 text-gray-600 dark:text-gray-300">
                                                 {item.tanggalHabis}
                                             </td>
 
                                             <td className="px-6 py-4">
-                                                <span
-                                                    className={`px-3 py-1 rounded-full text-xs font-semibold ${status === "Aktif"
-                                                            ? "bg-green-100 text-green-700"
-                                                            : "bg-red-100 text-red-700"
-                                                        }`}
-                                                >
-                                                    {status}
-                                                </span>
+                                                <StatusBadge status={status} />
                                             </td>
 
                                             <td className="px-6 py-4">
@@ -246,7 +236,7 @@ export default function IdentitasMember() {
 
                                                     <button
                                                         onClick={() => setDeleteIdentitas(item)}
-                                                        className="text-red-600 hover:text-red-800"
+                                                        className="text-red-500 hover:text-red-700"
                                                         title="Hapus"
                                                     >
                                                         🗑
@@ -273,7 +263,6 @@ export default function IdentitasMember() {
                 </div>
             </div>
 
-            {/* Modal tambah identitas */}
             {isAddOpen && (
                 <IdentitasModal
                     title="Tambah Identitas Baru"
@@ -285,7 +274,6 @@ export default function IdentitasMember() {
                 />
             )}
 
-            {/* Modal edit identitas */}
             {editIdentitas && (
                 <IdentitasModal
                     title="Edit Identitas"
@@ -297,7 +285,6 @@ export default function IdentitasMember() {
                 />
             )}
 
-            {/* Modal hapus identitas */}
             {deleteIdentitas && (
                 <DeleteModal
                     item={deleteIdentitas}
@@ -309,27 +296,38 @@ export default function IdentitasMember() {
     );
 }
 
-// Modal untuk tambah dan edit identitas.
+function StatusBadge({ status }) {
+    const style =
+        status === "Aktif"
+            ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300"
+            : "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300";
+
+    return (
+        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${style}`}>
+            {status}
+        </span>
+    );
+}
+
 function IdentitasModal({ title, form, onChange, onClose, onSave, mode }) {
     return (
         <div className="fixed inset-0 z-[99999] flex items-center justify-center">
-            {/* Overlay gelap seperti contoh implementasi */}
             <div className="absolute inset-0 bg-black/60" onClick={onClose} />
 
-            {/* Box modal */}
-            <div className="relative bg-white dark:bg-[#111827] text-black dark:text-gray-100 border border-gray-200 dark:border-gray-700 w-[430px] rounded-[8px] shadow-xl p-6 z-10">
+            <div className="relative bg-white dark:bg-[#111827] text-black dark:text-gray-100 w-[430px] rounded-[14px] shadow-2xl p-6 z-10 border border-gray-200 dark:border-gray-700">
                 <button
                     onClick={onClose}
-                    className="absolute top-3 right-4 text-gray-500 dark:text-gray-300 hover:text-black dark:hover:text-gray-100 text-[18px]"
+                    className="absolute top-3 right-4 text-gray-500 hover:text-black dark:hover:text-white text-[18px]"
                 >
                     ×
                 </button>
 
-                <p className="font-semibold text-[15px] mb-4 text-black dark:text-gray-100">{title}</p>
+                <p className="font-semibold text-[18px] mb-1">{title}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mb-5">
+                    Lengkapi data dokumen identitas member.
+                </p>
 
                 <div className="flex flex-col gap-3">
-                    {/* Nomor dokumen hanya bisa diisi saat tambah.
-              Saat edit dibuat disabled karena ketentuan: nomor dokumen tidak dapat diubah. */}
                     <Input
                         label="Nomor Dokumen"
                         value={form.nomorDokumen}
@@ -371,7 +369,7 @@ function IdentitasModal({ title, form, onChange, onClose, onSave, mode }) {
                 <div className="flex justify-end mt-5">
                     <button
                         onClick={onSave}
-                        className="w-[85px] h-[34px] bg-[#003566] text-white rounded-[6px] text-[12px] font-semibold hover:bg-[#00294f] transition"
+                        className="w-[90px] h-[36px] bg-[#003566] text-white rounded-[8px] text-[12px] font-semibold hover:bg-[#00294f] transition"
                     >
                         Simpan
                     </button>
@@ -381,34 +379,33 @@ function IdentitasModal({ title, form, onChange, onClose, onSave, mode }) {
     );
 }
 
-// Modal konfirmasi hapus identitas.
 function DeleteModal({ item, onClose, onConfirm }) {
     return (
         <div className="fixed inset-0 z-[99999] flex items-center justify-center">
             <div className="absolute inset-0 bg-black/60" onClick={onClose} />
 
-            <div className="relative bg-white dark:bg-[#111827] text-black dark:text-gray-100 border border-gray-200 dark:border-gray-700 w-[430px] rounded-[8px] shadow-xl p-6 z-10">
-                <p className="font-semibold text-[16px] mb-2 text-black dark:text-gray-100">
-                    Hapus Identitas?
-                </p>
+            <div className="relative bg-white dark:bg-[#111827] text-black dark:text-gray-100 w-[430px] rounded-[14px] shadow-2xl p-6 z-10 border border-gray-200 dark:border-gray-700">
+                <p className="font-semibold text-[18px] mb-2">Hapus Identitas?</p>
 
-                <p className="text-[12px] text-gray-600 dark:text-gray-300 mb-5">
+                <p className="text-[13px] text-gray-600 dark:text-gray-400 mb-5">
                     Identitas dengan nomor dokumen{" "}
-                    <span className="font-semibold">{item.nomorDokumen}</span> akan
-                    dihapus. Tindakan ini tidak dapat dibatalkan.
+                    <span className="font-semibold text-black dark:text-gray-100">
+                        {item.nomorDokumen}
+                    </span>{" "}
+                    akan dihapus. Tindakan ini tidak dapat dibatalkan.
                 </p>
 
                 <div className="flex justify-end gap-3">
                     <button
                         onClick={onClose}
-                        className="px-4 py-2 rounded-[6px] bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-100 text-[12px] font-semibold hover:bg-gray-200 dark:hover:bg-gray-700"
+                        className="px-4 py-2 rounded-[8px] bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-[12px] font-semibold hover:bg-gray-200 dark:hover:bg-gray-700"
                     >
                         Batal
                     </button>
 
                     <button
                         onClick={onConfirm}
-                        className="px-4 py-2 rounded-[6px] bg-[#003566] text-white text-[12px] font-semibold hover:bg-[#00294f]"
+                        className="px-4 py-2 rounded-[8px] bg-[#003566] text-white text-[12px] font-semibold hover:bg-[#00294f]"
                     >
                         Hapus
                     </button>
@@ -418,36 +415,38 @@ function DeleteModal({ item, onClose, onConfirm }) {
     );
 }
 
-// Component input reusable agar field form tidak ditulis berulang.
 function Input({ label, type = "text", value, onChange, disabled = false }) {
     return (
         <div className="flex flex-col gap-1">
-            <label className="font-semibold text-[10px] text-black dark:text-gray-200">{label}</label>
+            <label className="font-semibold text-[11px] text-black dark:text-gray-100">
+                {label}
+            </label>
 
             <input
                 type={type}
                 value={value}
                 disabled={disabled}
                 onChange={(e) => onChange(e.target.value)}
-                className={`h-[30px] border border-gray-300 dark:border-gray-700 rounded-[5px] px-2 text-[11px] focus:outline-none focus:ring-2 focus:ring-yellow-400 ${disabled
-                    ? "bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 cursor-not-allowed"
-                    : "bg-white dark:bg-gray-900 text-black dark:text-gray-100"
+                className={`h-[32px] border border-gray-300 dark:border-gray-700 rounded-[7px] px-2 text-[12px] focus:outline-none focus:ring-2 focus:ring-[#FFD22E] dark:[color-scheme:dark] ${disabled
+                        ? "bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 cursor-not-allowed"
+                        : "bg-white dark:bg-gray-900 text-black dark:text-gray-100"
                     }`}
             />
         </div>
     );
 }
 
-// Component select reusable agar dropdown form tidak ditulis berulang.
 function SelectInput({ label, value, onChange, options }) {
     return (
         <div className="flex flex-col gap-1">
-            <label className="font-semibold text-[10px] text-black dark:text-gray-200">{label}</label>
+            <label className="font-semibold text-[11px] text-black dark:text-gray-100">
+                {label}
+            </label>
 
             <select
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
-                className="h-[30px] bg-white dark:bg-gray-900 text-black dark:text-gray-100 border border-gray-300 dark:border-gray-700 rounded-[5px] px-2 text-[11px] focus:outline-none focus:ring-2 focus:ring-yellow-400 [color-scheme:light] dark:[color-scheme:dark]"
+                className="h-[32px] bg-white dark:bg-gray-900 text-black dark:text-gray-100 border border-gray-300 dark:border-gray-700 rounded-[7px] px-2 text-[12px] focus:outline-none focus:ring-2 focus:ring-[#FFD22E] [color-scheme:light] dark:[color-scheme:dark]"
             >
                 {options.map((option) => (
                     <option key={option} value={option}>
