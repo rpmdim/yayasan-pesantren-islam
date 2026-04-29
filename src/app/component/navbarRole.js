@@ -14,7 +14,7 @@ export default function NavbarRole() {
   useEffect(() => {
     const currentUser = getCurrentUser();
     if (!currentUser) {
-      router.push("/login"); // redirect kalau belum login
+      router.push("/login"); 
     } else {
       setUser(currentUser);
     }
@@ -33,8 +33,8 @@ export default function NavbarRole() {
 
   const staffMenu = [
     { label: "Dashboard", href: "/staff-dashboard" },
-    { label: "Data Member", href: "/data-member" },
-    { label: "Kelola Klaim", href: "/klaim-missing-miles" },
+    { label: "Kelola Member", href: "/kelola-member" },
+    { label: "Kelola Klaim", href: "/kelola-klaim-missing-miles" },
     { label: "Kelola Hadiah & Penyedia", href: "/kelola-hadiah-penyedia" },
     { label: "Kelola Mitra", href: "/kelola-mitra" },
     { label: "Laporan Transaksi", href: "/laporan-transaksi" },
@@ -51,7 +51,7 @@ export default function NavbarRole() {
     router.push("/login");
   };
 
-  if (!user) return null; // render nothing saat loading
+  if (!user) return null; 
 
   return (
     <div className="fixed top-0 left-0 z-[9999] flex w-full justify-center pointer-events-none">

@@ -56,12 +56,12 @@ export default function Klaim_missing_miles() {
     <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] transition-colors">
       <NavbarRole role="member" userName="John W. Doe" roleLabel="Member" />
 
-      <main className="w-full p-6 pt-32 space-y-6 flex justify-center flex-col items-center">
+      <main className="w-full px-16 pt-32 space-y-6 flex justify-center flex-col items-center">
       
       {/* HEADER */}
-      <div className="w-[1200px] max-w-full flex justify-between items-center">
+      <div className="w-full max-w-full flex justify-between items-center">
         <div>
-          <p className="font-bold text-[25px] mt-3 mb-3 text-black dark:text-gray-100">Transfer Miles</p>
+          <p className="text-[32px] font-bold">Transfer Miles</p>
           <p className="text-[15px] text-gray-700 dark:text-gray-300">
             Award Miles tersedia:{" "}
             <span className="font-bold">32,000</span>
@@ -79,7 +79,7 @@ export default function Klaim_missing_miles() {
       </div>
 
       
-      <div className="w-[1200px] max-w-full p-6 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-[#111827] shadow-sm">
+      <div className="w-full max-w-full p-6 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-[#111827] shadow-sm">
         <p className="font-semibold text-[22px] mb-4 text-black dark:text-gray-100">Riwayat Transfer</p>
 
         <div className="overflow-x-auto">
