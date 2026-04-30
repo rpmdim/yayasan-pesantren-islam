@@ -3,6 +3,20 @@
 import { useState } from "react";
 import NavbarRole from "@/app/component/navbarRole";
 
+const getStatus = (start, end) => {
+  const today = new Date();
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+
+  today.setHours(0, 0, 0, 0);
+  startDate.setHours(0, 0, 0, 0);
+  endDate.setHours(23, 59, 59, 999);
+
+  if (today < startDate) return "Belum Aktif";
+  if (today > endDate) return "Expired";
+  return "Aktif";
+};
+
 export default function KelolaHadiahPenyedia() {
   const [rewards, setRewards] = useState([
     {
@@ -13,8 +27,7 @@ export default function KelolaHadiahPenyedia() {
       tipe: "airline",
       miles: 15000,
       validStart: "2024-01-01",
-      programEnd: "2025-12-31",
-      active: true,
+      programEnd: "2026-12-31",
     },
     {
       kode: "RWD-002",
@@ -25,7 +38,6 @@ export default function KelolaHadiahPenyedia() {
       miles: 25000,
       validStart: "2024-01-01",
       programEnd: "2025-12-31",
-      active: true,
     },
     {
       kode: "RWD-003",
@@ -34,9 +46,8 @@ export default function KelolaHadiahPenyedia() {
       penyedia: "Traveloka Partner",
       tipe: "partner",
       miles: 8000,
-      validStart: "2024-06-01",
-      programEnd: "2025-06-30",
-      active: true,
+      validStart: "2026-06-01",
+      programEnd: "2026-12-31",
     },
     {
       kode: "RWD-004",
@@ -46,8 +57,7 @@ export default function KelolaHadiahPenyedia() {
       tipe: "partner",
       miles: 3000,
       validStart: "2024-01-01",
-      programEnd: "2025-12-31",
-      active: false,
+      programEnd: "2025-01-31",
     },
   ]);
 
@@ -56,17 +66,18 @@ export default function KelolaHadiahPenyedia() {
   const [modalMode, setModalMode] = useState(null);
   const [selectedReward, setSelectedReward] = useState(null);
 
+  const providers = [...new Set(rewards.map((item) => item.penyedia))];
+
   const filteredRewards = rewards.filter((item) => {
-    const matchProvider = providerFilter === "" || item.penyedia === providerFilter;
+    const matchProvider =
+      providerFilter === "" || item.penyedia === providerFilter;
+
     const matchStatus =
       statusFilter === "" ||
-      (statusFilter === "Aktif" && item.active) ||
-      (statusFilter === "Tidak Aktif" && !item.active);
+      getStatus(item.validStart, item.programEnd) === statusFilter;
 
     return matchProvider && matchStatus;
   });
-
-  const providers = [...new Set(rewards.map((item) => item.penyedia))];
 
   const openCreateModal = () => {
     setSelectedReward(null);
@@ -93,7 +104,6 @@ export default function KelolaHadiahPenyedia() {
           ...formData,
           kode: `RWD-${nextNumber}`,
           miles: Number(formData.miles),
-          active: true,
         },
       ]);
     }
@@ -102,7 +112,12 @@ export default function KelolaHadiahPenyedia() {
       setRewards((prev) =>
         prev.map((item) =>
           item.kode === selectedReward.kode
-            ? { ...item, ...formData, miles: Number(formData.miles) }
+            ? {
+                ...item,
+                ...formData,
+                kode: item.kode,
+                miles: Number(formData.miles),
+              }
             : item
         )
       );
@@ -113,18 +128,16 @@ export default function KelolaHadiahPenyedia() {
   };
 
   const handleDelete = () => {
-    setRewards((prev) => prev.filter((item) => item.kode !== selectedReward.kode));
+    setRewards((prev) =>
+      prev.filter((item) => item.kode !== selectedReward.kode)
+    );
     setModalMode(null);
     setSelectedReward(null);
   };
 
   return (
     <div>
-      <NavbarRole
-        role="staff"
-        userName="Mr. Admin Aero"
-        roleLabel="Staff"
-      />
+      <NavbarRole role="staff" userName="Mr. Admin Aero" roleLabel="Staff" />
 
       <div className="pt-32 px-16 pb-12 bg-background text-foreground min-h-screen">
         <div className="flex justify-between items-center mb-8">
@@ -169,7 +182,8 @@ export default function KelolaHadiahPenyedia() {
             >
               <option value="">Semua</option>
               <option value="Aktif">Aktif</option>
-              <option value="Tidak Aktif">Tidak Aktif</option>
+              <option value="Belum Aktif">Belum Aktif</option>
+              <option value="Expired">Expired</option>
             </select>
           </div>
         </div>
@@ -190,54 +204,50 @@ export default function KelolaHadiahPenyedia() {
             </thead>
 
             <tbody className="divide-y divide-[#EFE6C9]">
-              {filteredRewards.map((item) => (
-                <tr key={item.kode} className="hover:bg-[#FFFDF5]">
-                  <td className="px-6 py-4 font-semibold">{item.kode}</td>
-                  <td className="px-6 py-4 font-semibold">{item.nama}</td>
-                  <td className="px-6 py-4 max-w-[250px] truncate text-gray-600">
-                    {item.deskripsi}
-                  </td>
-                  <td className="px-6 py-4">
-                    <p className="font-semibold">{item.penyedia}</p>
-                    <span className="text-xs bg-[#FFF1B8] text-[#8A6A00] px-2 py-1 rounded-full">
-                      {item.tipe}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 font-semibold">
-                    {item.miles.toLocaleString("id-ID")}
-                  </td>
-                  <td className="px-6 py-4">
-                    {item.validStart} — {item.programEnd}
-                  </td>
-                  <td className="px-6 py-4">
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                        item.active
-                          ? "bg-green-100 text-green-700"
-                          : "bg-red-100 text-red-700"
-                      }`}
-                    >
-                      {item.active ? "Aktif" : "Tidak Aktif"}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex gap-3">
-                      <button
-                        onClick={() => openEditModal(item)}
-                        className="text-[#8A6A00] hover:underline font-semibold"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => openDeleteModal(item)}
-                        className="text-red-500 hover:underline font-semibold"
-                      >
-                        Hapus
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+              {filteredRewards.map((item) => {
+                const status = getStatus(item.validStart, item.programEnd);
+
+                return (
+                  <tr key={item.kode} className="hover:bg-[#FFFDF5]">
+                    <td className="px-6 py-4 font-semibold">{item.kode}</td>
+                    <td className="px-6 py-4 font-semibold">{item.nama}</td>
+                    <td className="px-6 py-4 max-w-[250px] truncate text-gray-600">
+                      {item.deskripsi}
+                    </td>
+                    <td className="px-6 py-4">
+                      <p className="font-semibold">{item.penyedia}</p>
+                      <span className="text-xs bg-[#FFF1B8] text-[#8A6A00] px-2 py-1 rounded-full">
+                        {item.tipe}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 font-semibold">
+                      {item.miles.toLocaleString("id-ID")}
+                    </td>
+                    <td className="px-6 py-4">
+                      {item.validStart} — {item.programEnd}
+                    </td>
+                    <td className="px-6 py-4">
+                      <StatusBadge status={status} />
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex gap-3">
+                        <button
+                          onClick={() => openEditModal(item)}
+                          className="text-[#8A6A00] hover:underline font-semibold"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => openDeleteModal(item)}
+                          className="text-red-500 hover:underline font-semibold"
+                        >
+                          Hapus
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
 
               {filteredRewards.length === 0 && (
                 <tr>
@@ -271,6 +281,21 @@ export default function KelolaHadiahPenyedia() {
   );
 }
 
+function StatusBadge({ status }) {
+  const style =
+    status === "Aktif"
+      ? "bg-green-100 text-green-700"
+      : status === "Belum Aktif"
+      ? "bg-yellow-100 text-yellow-700"
+      : "bg-red-100 text-red-700";
+
+  return (
+    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${style}`}>
+      {status}
+    </span>
+  );
+}
+
 function RewardFormModal({ mode, reward, onClose, onSave }) {
   const [form, setForm] = useState({
     nama: reward?.nama || "",
@@ -280,7 +305,6 @@ function RewardFormModal({ mode, reward, onClose, onSave }) {
     deskripsi: reward?.deskripsi || "",
     validStart: reward?.validStart || "",
     programEnd: reward?.programEnd || "",
-    active: reward?.active ?? true,
   });
 
   const updateForm = (field, value) => {
@@ -373,17 +397,6 @@ function RewardFormModal({ mode, reward, onClose, onSave }) {
           />
         </div>
 
-        {mode === "edit" && (
-          <div className="mt-3">
-            <Select
-              label="Status"
-              value={form.active ? "Aktif" : "Tidak Aktif"}
-              onChange={(value) => updateForm("active", value === "Aktif")}
-              options={["Aktif", "Tidak Aktif"]}
-            />
-          </div>
-        )}
-
         <div className="flex justify-end gap-3 mt-6">
           <button
             onClick={onClose}
@@ -416,8 +429,8 @@ function DeleteModal({ reward, onClose, onDelete }) {
       >
         <p className="text-[22px] font-bold mb-2">Hapus Hadiah?</p>
         <p className="text-sm text-gray-600 mb-5">
-          Hadiah <span className="font-semibold">{reward.nama}</span> akan dihapus
-          dari daftar. Pastikan hadiah ini sudah tidak digunakan.
+          Hadiah <span className="font-semibold">{reward.nama}</span> akan
+          dihapus dari daftar. Pastikan hadiah ini sudah tidak digunakan.
         </p>
 
         <div className="flex justify-end gap-3">
