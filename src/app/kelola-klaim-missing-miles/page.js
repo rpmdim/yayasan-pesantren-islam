@@ -149,9 +149,10 @@ export default function KlaimMissingMiles() {
   const fullName = `${user.salutation} ${user.firstName} ${user.middleName} ${user.lastName}`;
 
   return (
-    <div className="w-full p-6 pt-30 space-y-6">
+    <div className="w-full px-16 pt-30 space-y-6">
 
       <NavbarRole role="member" userName={fullName} roleLabel="Member" />
+      <p className="text-[32px] font-bold">Kelola Klaim Missing Miles</p>
       <div className="flex flex-wrap gap-3">
         <div className="flex items-center gap-2 border rounded-full px-4 py-2 bg-white shadow-sm">
           <span className="text-gray-500 text-sm">Status |</span>
