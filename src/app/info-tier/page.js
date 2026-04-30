@@ -64,7 +64,7 @@ export default function InfoTierPage() {
 
 			<main className="pt-32 pb-10 px-4 sm:px-8">
 				<div className="max-w-[900px] mx-auto">
-					<p className="text-[38px] sm:text-[42px] font-extrabold text-[#0B5CC8] leading-tight">
+					<p className="text-[38px] sm:text-[42px] font-extrabold text-[#8A6A00] leading-tight">
 						Info Tier
 					</p>
 
@@ -72,7 +72,7 @@ export default function InfoTierPage() {
 						Lihat tingkatan tier, syarat minimal, dan progress Anda menuju tier berikutnya.
 					</p>
 
-					<section className="mt-6 p-5 sm:p-6 bg-white dark:bg-[#111827] border-2 border-[#66B8F8] rounded-[16px] shadow-sm">
+					<section className="mt-6 p-5 sm:p-6 bg-white dark:bg-[#111827] border-2 border-[#E6C12A] rounded-[16px] shadow-sm">
 						<p className="text-[20px] font-bold text-black dark:text-gray-100">
 							Progress ke Tier Berikutnya: {nextTier.name}
 						</p>
@@ -86,7 +86,7 @@ export default function InfoTierPage() {
 
 						<div className="w-full h-[10px] rounded-full bg-gray-200 dark:bg-gray-700 mt-2 overflow-hidden">
 							<div
-								className="h-full bg-[#0A4D94]"
+								className="h-full bg-[#FFD22E]"
 								style={{ width: `${progressPercent}%` }}
 							/>
 						</div>
@@ -105,7 +105,7 @@ export default function InfoTierPage() {
 									key={tier.name}
 									className={`bg-white dark:bg-[#111827] border rounded-[16px] p-5 sm:p-6 shadow-sm transition-colors ${
 										isCurrent
-											? "border-2 border-[#66B8F8]"
+											? "border-2 border-[#E6C12A]"
 											: "border-gray-200 dark:border-gray-700"
 									}`}
 								>
@@ -123,7 +123,7 @@ export default function InfoTierPage() {
 												</p>
 
 												{isCurrent ? (
-													<span className="h-[28px] px-3 rounded-full bg-[#3C97D3] text-white text-[13px] font-semibold flex items-center">
+													<span className="h-[28px] px-3 rounded-full bg-[#FFF1B8] text-[#8A6A00] text-[13px] font-semibold flex items-center">
 														Tier Anda
 													</span>
 												) : null}

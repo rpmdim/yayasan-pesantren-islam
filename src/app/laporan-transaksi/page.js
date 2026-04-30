@@ -310,7 +310,7 @@ export default function LaporanTransaksiPage() {
 								</button>
 							</div>
 
-							<section className="mt-4 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[14px] p-4 sm:p-5 shadow-sm overflow-x-auto">
+							<section className="mt-4 bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-700 rounded-[14px] p-4 sm:p-5 shadow-sm overflow-x-auto">
 								<table className="w-full min-w-[820px] text-sm">
 									<thead className="text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700">
 										<tr>
@@ -368,7 +368,7 @@ export default function LaporanTransaksiPage() {
 							</section>
 						</>
 					) : (
-						<section className="mt-4 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[14px] p-4 sm:p-5 shadow-sm overflow-x-auto">
+						<section className="mt-4 bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-700 rounded-[14px] p-4 sm:p-5 shadow-sm overflow-x-auto">
 							<p className="font-bold text-[22px] text-black dark:text-gray-100 mb-4">
 								Top Member berdasarkan Total Miles
 							</p>
@@ -403,9 +403,9 @@ export default function LaporanTransaksiPage() {
 
 			{toDelete && (
 				<div className="fixed inset-0 z-[99999] flex items-center justify-center px-4">
-					<div className="absolute inset-0 bg-black/60" onClick={() => setToDelete(null)} />
+					<div className="absolute inset-0 bg-black/60 z-[99998]" onClick={() => setToDelete(null)} />
 
-					<div className="relative z-10 w-full max-w-[560px] rounded-[12px] bg-[var(--color-surface)] border border-[var(--color-border)] p-5 shadow-xl">
+					<div className="relative z-[99999] w-full max-w-[560px] rounded-[12px] bg-white/100 dark:bg-[#111827] border border-gray-200 dark:border-gray-700 p-5 shadow-xl">
 						<p className="text-[30px] sm:text-[34px] font-extrabold leading-none text-black dark:text-gray-100">
 							Hapus Riwayat?
 						</p>
@@ -427,7 +427,7 @@ export default function LaporanTransaksiPage() {
 							<button
 								type="button"
 								onClick={handleDelete}
-								className="h-[38px] px-5 rounded-[8px] bg-[var(--color-brand)] hover:bg-[var(--color-brand-hover)] text-[13px] font-semibold text-[var(--color-text-on-yellow)]"
+								className="h-[38px] px-5 rounded-[8px] bg-[#FF0000] hover:bg-[#9F0712] text-[13px] font-semibold text-white"
 							>
 								Hapus
 							</button>
@@ -441,7 +441,7 @@ export default function LaporanTransaksiPage() {
 
 function SummaryCard({ title, value, icon, iconBg, iconColor }) {
 	return (
-		<section className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[12px] p-4 shadow-sm">
+		<section className="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-700 rounded-[12px] p-4 shadow-sm">
 			<div className="flex items-center gap-3">
 				<span className={`w-[30px] h-[30px] rounded-[8px] flex items-center justify-center ${iconBg} ${iconColor}`}>
 					{icon}
