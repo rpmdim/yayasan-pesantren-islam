@@ -3,7 +3,7 @@
 import { useState } from "react";
 import NavbarRole from "@/app/component/navbarRole";
 
-export default function DataMember() {
+export default function KelolaMember() {
     const [members, setMembers] = useState([
         {
             id: 1,
@@ -99,7 +99,8 @@ export default function DataMember() {
     const formatMiles = (value) => Number(value).toLocaleString("en-US");
 
     const filteredMembers = members.filter((member) => {
-        const fullName = `${member.namaDepan} ${member.namaTengah} ${member.namaBelakang}`.toLowerCase();
+        const fullName =
+            `${member.namaDepan} ${member.namaTengah} ${member.namaBelakang}`.toLowerCase();
         const keyword = search.toLowerCase();
 
         const matchesSearch =
@@ -213,7 +214,7 @@ export default function DataMember() {
 
     return (
         <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] transition-colors">
-            <NavbarRole role="staff" userName="Admin Staff" roleLabel="Staff" />
+            <NavbarRole />
 
             <div className="pt-32 px-4 sm:px-8 lg:px-16 pb-12">
                 {/* HEADER */}
@@ -324,7 +325,7 @@ export default function DataMember() {
                                             <div className="flex gap-3">
                                                 <button
                                                     onClick={() => openEditModal(member)}
-                                                    className="text-gray-700 dark:text-gray-300 hover:text-blue-600"
+                                                    className="text-gray-700 dark:text-gray-300 hover:text-[#CCA825]"
                                                     title="Edit"
                                                 >
                                                     ✎
@@ -508,7 +509,7 @@ function MemberModal({ title, form, onChange, onClose, onSave, mode }) {
                 <div className="flex justify-end mt-5">
                     <button
                         onClick={onSave}
-                        className="w-[90px] h-[36px] bg-[#003566] text-white rounded-[8px] text-[12px] font-semibold hover:bg-[#00294f] transition"
+                        className="w-[90px] h-[36px] bg-[#FFD22E] text-black rounded-[8px] text-[12px] font-semibold hover:bg-[#e6c12a] transition"
                     >
                         Simpan
                     </button>
@@ -537,14 +538,14 @@ function DeleteModal({ member, onClose, onConfirm }) {
                 <div className="flex justify-end gap-3">
                     <button
                         onClick={onClose}
-                        className="px-4 py-2 rounded-[8px] bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-[12px] font-semibold hover:bg-gray-200 dark:hover:bg-gray-700"
+                        className="px-4 py-2 rounded-[8px] bg-gray-100 text-gray-600 text-[12px] font-semibold hover:bg-gray-200 transition"
                     >
                         Batal
                     </button>
 
                     <button
                         onClick={onConfirm}
-                        className="px-4 py-2 rounded-[8px] bg-[#003566] text-white text-[12px] font-semibold hover:bg-[#00294f]"
+                        className="px-4 py-2 rounded-[8px] bg-[#FFD22E] text-black text-[12px] font-semibold hover:bg-[#e6c12a] transition"
                     >
                         Hapus
                     </button>
@@ -565,7 +566,7 @@ function Input({ label, type = "text", value, onChange }) {
                 type={type}
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
-                className="h-[32px] bg-white dark:bg-gray-900 text-black dark:text-gray-100 border border-gray-300 dark:border-gray-700 rounded-[7px] px-2 text-[12px] focus:outline-none focus:ring-2 focus:ring-[#FFD22E]"
+                className="h-[32px] bg-white dark:bg-gray-900 text-black dark:text-gray-100 border border-gray-300 dark:border-gray-700 rounded-[7px] px-2 text-[12px] focus:outline-none focus:ring-2 focus:ring-[#FFD22E] dark:[color-scheme:dark]"
             />
         </div>
     );
@@ -581,7 +582,7 @@ function SelectInput({ label, value, onChange, options }) {
             <select
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
-                className="h-[32px] bg-white dark:bg-gray-900 text-black dark:text-gray-100 border border-gray-300 dark:border-gray-700 rounded-[7px] px-2 text-[12px] focus:outline-none focus:ring-2 focus:ring-[#FFD22E]"
+                className="h-[32px] bg-white dark:bg-gray-900 text-black dark:text-gray-100 border border-gray-300 dark:border-gray-700 rounded-[7px] px-2 text-[12px] focus:outline-none focus:ring-2 focus:ring-[#FFD22E] [color-scheme:light] dark:[color-scheme:dark]"
             >
                 {options.map((option) => (
                     <option key={option} value={option}>

@@ -44,7 +44,6 @@ export default function IdentitasMember() {
     const [deleteIdentitas, setDeleteIdentitas] = useState(null);
     const [form, setForm] = useState(emptyForm);
 
-    // Tanggal dibuat statis supaya hasil render server dan client stabil.
     const today = new Date().toISOString().split("T")[0];
 
     const getStatus = (tanggalHabis) => {
@@ -144,7 +143,7 @@ export default function IdentitasMember() {
 
     return (
         <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] transition-colors">
-            <NavbarRole role="member" userName="John Doe" roleLabel="Member" />
+            <NavbarRole />
 
             <div className="pt-32 px-4 sm:px-8 lg:px-16 pb-12">
                 {/* HEADER */}
@@ -228,7 +227,7 @@ export default function IdentitasMember() {
                                                 <div className="flex gap-3">
                                                     <button
                                                         onClick={() => openEditModal(item)}
-                                                        className="text-gray-700 dark:text-gray-300 hover:text-blue-600"
+                                                        className="text-gray-700 dark:text-gray-300 hover:text-[#CCA825]"
                                                         title="Edit"
                                                     >
                                                         ✎
@@ -369,7 +368,7 @@ function IdentitasModal({ title, form, onChange, onClose, onSave, mode }) {
                 <div className="flex justify-end mt-5">
                     <button
                         onClick={onSave}
-                        className="w-[90px] h-[36px] bg-[#003566] text-white rounded-[8px] text-[12px] font-semibold hover:bg-[#00294f] transition"
+                        className="w-[90px] h-[36px] bg-[#FFD22E] text-black rounded-[8px] text-[12px] font-semibold hover:bg-[#e6c12a] transition"
                     >
                         Simpan
                     </button>
@@ -398,14 +397,14 @@ function DeleteModal({ item, onClose, onConfirm }) {
                 <div className="flex justify-end gap-3">
                     <button
                         onClick={onClose}
-                        className="px-4 py-2 rounded-[8px] bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-[12px] font-semibold hover:bg-gray-200 dark:hover:bg-gray-700"
+                        className="w-[78px] h-[44px] rounded-[8px] bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-[16px] font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition"
                     >
                         Batal
                     </button>
 
                     <button
                         onClick={onConfirm}
-                        className="px-4 py-2 rounded-[8px] bg-[#003566] text-white text-[12px] font-semibold hover:bg-[#00294f]"
+                        className="w-[96px] h-[44px] rounded-[8px] bg-[#FFD22E] text-black text-[16px] font-semibold hover:bg-[#e6c12a] transition"
                     >
                         Hapus
                     </button>
