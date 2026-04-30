@@ -162,7 +162,7 @@ export default function RedeemHadiahPage() {
 										key={item.id}
 										className="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-700 rounded-[14px] p-4 shadow-sm"
 									>
-										<p className="inline-flex h-[28px] items-center px-3 rounded-full bg-[#0A4D94] text-white text-[12px] font-semibold">
+										<p className="inline-flex h-[28px] items-center px-3 rounded-full bg-[#FFF1B8] text-[#8A6A00] text-[12px] font-semibold">
 											{item.id} - {item.penyedia}
 										</p>
 
@@ -186,9 +186,9 @@ export default function RedeemHadiahPage() {
 											type="button"
 											onClick={() => openRedeemModal(item)}
 											disabled={!cukupMiles}
-											className={`mt-3 h-[36px] px-4 rounded-[8px] text-[13px] font-bold text-white transition ${
+											className={`mt-3 h-[36px] px-4 rounded-[8px] text-[13px] font-bold text-black transition ${
 												cukupMiles
-													? "bg-red-600 hover:bg-red-700"
+													? "bg-[#FFD22E] hover:bg-[#e6c12a] text-black"
 													: "bg-gray-300 dark:bg-gray-700 cursor-not-allowed"
 											}`}
 										>
@@ -244,8 +244,8 @@ export default function RedeemHadiahPage() {
 
 						<p className="text-[15px] text-gray-700 dark:text-gray-300 mt-2 leading-snug">
 							Miles akan dipotong sebesar <span className="font-bold">{formatMiles(selectedHadiah.miles)}</span>
-							 untuk reward <span className="font-bold">{selectedHadiah.nama}</span> dengan kode
-							 <span className="font-bold">{selectedHadiah.id}</span> dari <span className="font-bold">{selectedHadiah.penyedia}</span>.
+							 untuk reward <span className="font-bold">{selectedHadiah.nama}</span> dengan kode 
+							 <span className="font-bold"> {selectedHadiah.id}</span> dari <span className="font-bold">{selectedHadiah.penyedia}</span>.
 						</p>
 
 						<div className="mt-6 flex justify-end gap-2">
@@ -260,7 +260,7 @@ export default function RedeemHadiahPage() {
 							<button
 								type="button"
 								onClick={confirmRedeem}
-								className="h-[38px] px-6 rounded-[8px] bg-[#0A4D94] hover:bg-[#083c73] text-[13px] font-semibold text-white"
+									className="h-[38px] px-6 rounded-[8px] bg-[#FFD22E] hover:bg-[#e6c12a] text-[13px] font-semibold text-black"
 							>
 								Redeem
 							</button>

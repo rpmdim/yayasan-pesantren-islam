@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
+import { getCurrentUser } from "@/app/lib/auth";
 import NavbarRole from "@/app/component/navbarRole";
 
 const memberInitialProfile = {
@@ -66,6 +67,7 @@ export default function PengaturanProfilPage() {
 		member: memberInitialProfile,
 		staff: staffInitialProfile,
 	});
+	const [currentUser, setCurrentUser] = useState(null);
 	const [isPasswordOpen, setIsPasswordOpen] = useState(false);
 	const [passwords, setPasswords] = useState({
 		oldPassword: "",
@@ -77,6 +79,35 @@ export default function PengaturanProfilPage() {
 
 	const currentProfile = profiles[activeRole];
 	const currentRoleMeta = roles[activeRole];
+
+	useEffect(() => {
+		const u = getCurrentUser();
+		if (!u) return;
+
+		setCurrentUser(u);
+
+		const normalized = u.role ? u.role.toLowerCase() : "member";
+		const roleKey = normalized === "staff" || normalized === "staf" ? "staff" : "member";
+		setActiveRole(roleKey);
+
+		// map user fields into our profile shape and merge
+		setProfiles((prev) => ({
+			...prev,
+			[roleKey]: {
+				...prev[roleKey],
+				email: u.email ?? prev[roleKey].email,
+				salutation: u.salutation ?? prev[roleKey].salutation,
+				namaDepan: u.firstName ?? prev[roleKey].namaDepan,
+				namaTengah: u.middleName ?? prev[roleKey].namaTengah,
+				namaBelakang: u.lastName ?? prev[roleKey].namaBelakang,
+				kewarganegaraan: u.nationality ?? prev[roleKey].kewarganegaraan,
+				countryCode: u.countryCode ?? prev[roleKey].countryCode,
+				nomorHp: u.phoneNumber ?? prev[roleKey].nomorHp,
+				tanggalLahir: u.birthDate ?? prev[roleKey].tanggalLahir,
+				kodeMaskapai: u.airlineCode ?? prev[roleKey].kodeMaskapai,
+			},
+		}));
+	}, []);
 
 	const expectedOldPassword = useMemo(
 		() => (activeRole === "member" ? "member123" : "staff123"),
@@ -171,36 +202,8 @@ export default function PengaturanProfilPage() {
 								</p>
 							</div>
 
-							<div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 p-1 rounded-[10px] w-full sm:w-auto transition-colors">
-								<button
-									type="button"
-									onClick={() => {
-										setActiveRole("member");
-										setSavedMessage("");
-									}}
-									className={`h-[36px] px-4 rounded-[8px] text-[13px] font-semibold transition w-1/2 sm:w-auto ${
-										activeRole === "member"
-											? "bg-[#FFD22E] text-black"
-											: "text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-gray-100"
-									}`}
-								>
-									Preview Member
-								</button>
-
-								<button
-									type="button"
-									onClick={() => {
-										setActiveRole("staff");
-										setSavedMessage("");
-									}}
-									className={`h-[36px] px-4 rounded-[8px] text-[13px] font-semibold transition w-1/2 sm:w-auto ${
-										activeRole === "staff"
-											? "bg-[#FFD22E] text-black"
-											: "text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-gray-100"
-									}`}
-								>
-									Preview Staf
-								</button>
+							<div className="w-full sm:w-auto text-sm text-gray-700 dark:text-gray-300 font-medium">
+								Akun saat ini: {currentUser ? `${currentUser.salutation ? currentUser.salutation + " " : ""}${currentUser.firstName ?? ""} ${currentUser.lastName ?? ""} - ${currentUser.role ?? currentRoleMeta.roleLabel}` : currentRoleMeta.roleLabel}
 							</div>
 						</div>
 					</section>

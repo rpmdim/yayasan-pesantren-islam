@@ -77,11 +77,11 @@ export default function BeliPackagePage() {
 								className="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-700 rounded-[14px] p-4 shadow-sm"
 							>
 								<div className="flex justify-between items-center mb-3">
-									<span className="w-[30px] h-[30px] rounded-[8px] bg-[#D9ECFF] text-[#0A4D94] ring-1 ring-[#B8DAFF] dark:ring-0 flex items-center justify-center">
+									<span className="w-[30px] h-[30px] rounded-[8px] bg-[#FFF1B8] text-[#8A6A00] ring-1 ring-[#E6C12A] dark:ring-0 flex items-center justify-center">
 										<CartIcon />
 									</span>
 
-									<span className="h-[24px] px-3 rounded-full bg-[#0A4D94] text-white text-[11px] font-semibold flex items-center">
+									<span className="h-[24px] px-3 rounded-full bg-[#FFF1B8] text-[#8A6A00] text-[11px] font-semibold flex items-center">
 										{pkg.id}
 									</span>
 								</div>
@@ -92,14 +92,14 @@ export default function BeliPackagePage() {
 
 								<p className="text-[13px] text-gray-500 dark:text-gray-400 mt-1">Award Miles</p>
 
-								<p className="text-[26px] font-extrabold leading-none text-[#0A4D94] mt-2">
+								<p className="text-[26px] font-extrabold leading-none text-[#8A6A00] mt-2">
 									{formatRupiah(pkg.harga)}
 								</p>
 
 								<button
 									type="button"
 									onClick={() => setSelectedPackage(pkg)}
-									className="mt-4 w-full h-[38px] rounded-[8px] bg-[#0A4D94] text-white text-[13px] font-semibold hover:bg-[#083c73] transition"
+									className="mt-4 w-full h-[38px] rounded-[8px] bg-[#FFD22E] text-black text-[13px] font-semibold hover:bg-[#e6c12a] transition"
 								>
 									Beli
 								</button>
@@ -185,7 +185,7 @@ export default function BeliPackagePage() {
 							<button
 								type="button"
 								onClick={confirmPembelian}
-								className="h-[38px] px-5 rounded-[8px] bg-[#0A4D94] hover:bg-[#083c73] text-[13px] font-semibold text-white"
+								className="h-[38px] px-5 rounded-[8px] bg-[#FFD22E] hover:bg-[#e6c12a] text-[13px] font-semibold text-black"
 							>
 								Konfirmasi Pembelian
 							</button>
