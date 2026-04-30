@@ -1,10 +1,30 @@
-Akun Login
+# ✈️ AeroMiles - Tugas Kelompok 03
 
-Member: member@mail.com
-Staff: staff@mail.com
+## 👥 Anggota Tim  
+**Kelompok 07: Yayasan Pesantren Islam - Kelas Basis Data B**
 
-password : 123456
+- Raden Pandji Mohammad Dimaz Bagus Hayyii Dausti Surya (2406439343)  
+- Izzati Maharani Yusmananda (2406361675)  
+- Mohammad 'Aly Haidarulloh (2406425804)  
+- Alfino Ahmad Feriza (2406405304)  
 
+---
+
+## 🔐 Akun Login
+
+Gunakan kredensial berikut untuk mengakses sistem:
+
+### 👤 Akun Member
+- Email: `member@mail.com`  
+
+### 🧑‍💼 Akun Staff
+- Email: `staff@mail.com`  
+
+### 🔑 Password Default
+```bash
+123456
+```
+---
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
